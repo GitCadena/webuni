@@ -11,7 +11,18 @@ const browserSync   = require('browser-sync').create();
 const autoprefixer  = require('gulp-autoprefixer');
 const jpgRecompress = require('imagemin-jpeg-recompress'); 
 const clean         = require('gulp-clean');
+const gulp = require('gulp');
+const sass = require('gulp-sass')(require('sass'));
 
+gulp.task('sass', function () {
+  return gulp.src('./sass/**/*.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest('./css'));
+});
+
+gulp.task('build', gulp.series('sass'));
+
+exports.default = gulp.series('build');
 
 // Paths
 var paths = {
